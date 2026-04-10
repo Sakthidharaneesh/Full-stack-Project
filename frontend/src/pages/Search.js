@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -20,13 +20,12 @@ const Search = () => {
   });
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (query) {
-      searchAll();
+  const searchAll = useCallback(async () => {
+    if (!query) {
+      setResults({ users: [], posts: [], jobs: [] });
+      return;
     }
-  }, [query]);
 
-  const searchAll = async () => {
     setLoading(true);
     try {
       const [usersRes, postsRes, jobsRes] = await Promise.all([
@@ -45,7 +44,11 @@ const Search = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [query]);
+
+  useEffect(() => {
+    searchAll();
+  }, [searchAll]);
 
   const totalResults = results.users.length + results.posts.length + results.jobs.length;
 

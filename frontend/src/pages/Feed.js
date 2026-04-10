@@ -316,7 +316,6 @@ const PostCard = ({ post, onLike, onComment, onDelete, onEdit, user }) => {
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [isSaved, setIsSaved] = useState(false);
-  const [showShareMenu, setShowShareMenu] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(post.content);
   const [showMenu, setShowMenu] = useState(false);

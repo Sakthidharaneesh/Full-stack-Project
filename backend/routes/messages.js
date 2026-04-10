@@ -21,7 +21,9 @@ router.post('/', auth, async (req, res) => {
 
     // Emit socket event
     const io = req.app.get('io');
-    io.to(req.body.recipient).emit('receive-message', populatedMessage);
+    if (io && typeof io.to === 'function') {
+      io.to(req.body.recipient).emit('receive-message', populatedMessage);
+    }
 
     res.json(populatedMessage);
   } catch (err) {
